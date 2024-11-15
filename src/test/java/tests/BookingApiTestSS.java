@@ -10,10 +10,10 @@ import static org.testng.Assert.*;
 
 @Epic("REST API Tests")
 @Feature("Booking Management")
-public class BookingApiTest extends TestConfig {
-    
+public class BookingApiTestSS extends TestConfig {
+
     private final BookingApi bookingApi = new BookingApi();
-    
+
     @Test
     @Story("Get Booking")
     @Description("Verify that a booking can be retrieved")
@@ -26,5 +26,6 @@ public class BookingApiTest extends TestConfig {
         assertEquals(booking.getLastname(), "Smith");
         assertEquals(booking.getTotalprice(), 111);
         assertTrue(booking.isDepositpaid());
+        assertEquals("", "");
     }
-} 
+}
