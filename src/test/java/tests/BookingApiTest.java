@@ -22,6 +22,8 @@ public class BookingApiTest extends TestConfig {
     public void getBooking() {
         Booking booking = bookingApi.getBooking(100);
 
+        System.out.println(booking.getBookingdates());
+
         assertNotNull(booking.getFirstname());
         assertEquals(booking.getFirstname(), "Josh");
         assertEquals(booking.getLastname(), "Allen");
