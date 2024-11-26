@@ -30,6 +30,6 @@ public class BookingApiTestNK extends TestConfig {
         assertTrue(booking.isDepositpaid());
         assertEquals(booking.getBookingdates().getCheckin(),"2018-01-01");
         assertEquals(booking.getBookingdates().getCheckout(), "2019-01-01");
-        assertEquals(booking.getAdditionalneeds(), "midnight snack");
+        assertEquals(booking.getAdditionalneeds(), "super bowls");
     }
 }
