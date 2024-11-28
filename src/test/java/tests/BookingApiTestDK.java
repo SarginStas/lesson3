@@ -43,7 +43,6 @@ public class BookingApiTestDK extends TestConfig {
         assertNotNull(bookingIds);
         assertTrue(bookingIds.length > 0);
 
-        // Check that each bookingId is not null
         for (BookingId bookingId : bookingIds) {
 
             int id = bookingId.getBookingid();
@@ -51,7 +50,6 @@ public class BookingApiTestDK extends TestConfig {
             assertNotNull(id);
 
             Booking booking = bookingApi.getBooking(id);
-            assertNotNull(booking, "Booking should not be null for ID: " + id);
 
             // Проверяем соответствие имени и фамилии
             assertEquals(booking.getFirstname(), firstName,
