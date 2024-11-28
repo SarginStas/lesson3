@@ -1,5 +1,9 @@
 package config;
 
+import io.qameta.allure.Description;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.Story;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.config.ObjectMapperConfig;
@@ -9,9 +13,10 @@ import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.Test;
 import utils.JsonUtils;
 
-public class TestConfig {
+public abstract class TestConfig {
     
     protected static RequestSpecification requestSpec;
     
@@ -31,4 +36,10 @@ public class TestConfig {
         
         RestAssured.requestSpecification = requestSpec;
     }
-} 
+
+    @Test
+    @Story("Get Bookings")
+    @Description("Verify that all bookings can be retrieved")
+    @Severity(SeverityLevel.CRITICAL)
+    public abstract void testGetAllBookings();
+}

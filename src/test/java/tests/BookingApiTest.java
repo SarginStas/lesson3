@@ -26,7 +26,7 @@ public class BookingApiTest extends TestConfig {
     @Description("Verify that a booking can be retrieved")
     @Severity(SeverityLevel.CRITICAL)
     public void getBooking() {
-        Booking booking = bookingApi.getBooking(111111111);
+        Booking booking = bookingApi.getBooking(100);
 
         assertNotNull(booking.getFirstname());
         assertEquals(booking.getFirstname(), "John");
