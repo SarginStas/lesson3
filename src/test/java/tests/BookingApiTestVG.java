@@ -61,6 +61,6 @@ public class BookingApiTest extends TestConfig {
         // Check that each bookingId is not null
         for (BookingId bookingId : bookingIds) {
             assertNotNull(bookingId.getBookingid());
-        } //вернулись id по фильтру A
+        }
     }
 }
