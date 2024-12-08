@@ -19,6 +19,28 @@ public class BookingApiTestDK extends TestConfig {
 
     private final BookingApi bookingApi = new BookingApi();
 
+    private String authToken; // Глобальная переменная для хранения токена
+    private int addBooking;
+
+    @Test
+    @Story("Auth Bookings")
+    @Severity(SeverityLevel.CRITICAL)
+    public void testAuthBooking() {
+        // Создаем JSON-запрос
+        String requestBody = """
+                {
+                    "username" : "admin",
+                    "password" : "password123"
+                }
+                """;
+
+        // Отправляем POST-запрос
+        String authBooking = bookingApi.authBooking(requestBody);
+
+        // Сохраняем токен в глобальную переменную
+        this.authToken = authBooking;
+    }
+
     @Test
     @Story("Get Bookings")
     @Description("Verify that all bookings can be retrieved")
@@ -26,8 +48,8 @@ public class BookingApiTestDK extends TestConfig {
     @Override
     public void testGetAllBookings() {
 
-        String firstName = "Jane";
-        String lastName = "Doe";
+        String firstName = "Susan";
+        String lastName = "Ericsson";
 
         Response response = given()
                 .queryParam("firstname", firstName)
@@ -44,11 +66,8 @@ public class BookingApiTestDK extends TestConfig {
         assertTrue(bookingIds.length > 0);
 
         for (BookingId bookingId : bookingIds) {
-
             int id = bookingId.getBookingid();
-
             assertNotNull(id);
-
             Booking booking = bookingApi.getBooking(id);
 
             // Проверяем соответствие имени и фамилии
@@ -58,5 +77,85 @@ public class BookingApiTestDK extends TestConfig {
                     "Lastname mismatch for booking ID: " + id);
             System.out.println("Validated booking with ID: " + id);
         }
+    }
+
+    @Test
+    @Story("Add Bookings")
+    @Severity(SeverityLevel.CRITICAL)
+    public void testAddBooking() {
+        // Создаем JSON-запрос
+        String requestBody = """
+            {
+                "firstname" : "Jim1",
+                "lastname" : "Brown1",
+                "totalprice" : 1111,
+                "depositpaid" : true,
+                "bookingdates" : {
+                    "checkin" : "2024-01-01",
+                    "checkout" : "2024-02-01"
+                },
+                "additionalneeds" : "Breakfast1"
+            }
+            """;
+        int createdBooking = bookingApi.createBooking(requestBody);
+        this.addBooking = createdBooking;
+        Booking booking = bookingApi.getBooking(createdBooking);
+    }
+
+    @Test
+    @Story("Update Bookings")
+    @Severity(SeverityLevel.CRITICAL)
+    public void testUpdatedBooking() {
+
+        int bookingId = 10;
+
+        // Создаем JSON-запрос
+        String updatedRequestBody = """
+            {
+                "firstname" : "Дима",
+                "lastname" : "Казаков",
+                "totalprice" : 1111,
+                "depositpaid" : true,
+                "bookingdates" : {
+                    "checkin" : "2024-01-01",
+                    "checkout" : "2024-02-01"
+                },
+                "additionalneeds" : "Breakfast1"
+            }
+            """;
+
+        bookingApi.updateBooking(bookingId, updatedRequestBody, authToken);
+        Booking booking = bookingApi.getBooking(bookingId);
+    }
+
+    @Test
+    @Story("Update BookingsName")
+    @Severity(SeverityLevel.CRITICAL)
+    public void testUpdatedBookingNames() {
+
+        String patchRequestBody = """
+        {
+            "firstname": "Dmitriy",
+            "lastname": "Smith"
+        }
+        """;
+
+        int bookingId = 10;
+
+        bookingApi.patchBooking(bookingId, patchRequestBody, authToken);
+    }
+
+    @Test
+    @Story("Delete Booking")
+    public void testDeleteBooking() {
+
+        bookingApi.deleteBooking(addBooking, authToken);
+    }
+
+    @Test
+    @Story("Delete Booking")
+    public void testPingBooking() {
+
+        bookingApi.pingBooking();
     }
 }

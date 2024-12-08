@@ -1,5 +1,6 @@
 package models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Data;
 import lombok.AllArgsConstructor;
@@ -13,6 +14,7 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 @AllArgsConstructor
 @JsonDeserialize(builder = Booking.BookingBuilder.class)
 public class Booking {
+    @JsonProperty("firstname")
     private String firstname;
     private String lastname;
     private int totalprice;
