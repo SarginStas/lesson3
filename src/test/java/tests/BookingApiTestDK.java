@@ -153,7 +153,7 @@ public class BookingApiTestDK extends TestConfig {
     }
 
     @Test
-    @Story("Delete Booking")
+    @Story("Ping Booking")
     public void testPingBooking() {
 
         bookingApi.pingBooking();
